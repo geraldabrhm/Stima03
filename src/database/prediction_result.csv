@@ -1,0 +1,66 @@
+id_prediction,patient_name,id_disease,prediction_status
+1,"Nicholas King",25,1
+2,"Robin Brown PhD",67,0
+3,"Nicholas Simpson",74,0
+4,"Jennifer Sanchez",69,1
+5,"Anthony Allen",14,0
+6,"Jennifer Leonard",67,1
+7,"Jessica Mcintosh",75,1
+8,"Victor Roberts",25,1
+9,"Dr. Amber Guzman PhD",50,1
+10,"Laura Fitzpatrick",33,0
+11,"Samuel Pierce DVM",28,0
+12,"Russell Schwartz",75,0
+13,"Alison Guerra",39,0
+14,"Kelly Rhodes",31,0
+15,"Rebecca Howard",72,1
+16,"Abigail Butler",63,1
+17,"Jason Hansen",74,0
+18,"Laurie Wright",9,1
+19,"Ashley Garcia",14,1
+20,"Daniel Lynch",34,0
+21,"Ross Valentine",53,1
+31,"Tiffany Webb",55,1
+32,"John Solis",21,1
+33,"Dean Harris",70,1
+34,"Dr. Ronald Smith",39,1
+35,"David Smith",46,1
+36,"Sharon Delgado",46,0
+37,"Daniel Reed",64,1
+38,"Regina Hall",60,0
+39,"Ann Nguyen",9,0
+40,"Harry Flowers",18,0
+41,"Miss Lisa Valdez",56,0
+42,"Jeremy Dominguez",1,0
+43,"Daniel Craig",29,0
+44,"Keith Goodman",14,0
+45,"Derek Miller",47,1
+46,"Jacob Garrett",68,0
+47,"Adrian Benton",57,0
+48,"Patricia Miller",71,1
+49,"Natalie Cochran",6,1
+50,"Kelly Wood",52,1
+51,"Thomas Phillips",45,1
+52,"Jennifer Mcdonald",49,1
+53,"Beth Martinez",35,1
+54,"Patrick Ballard",17,1
+55,"Larry White",36,0
+56,"Rachel Raymond",70,0
+57,"Jennifer Sweeney",49,1
+58,"Meredith Deleon",13,1
+59,"Colton Martinez",57,0
+60,"Bryce Stokes",69,0
+61,"Kevin Montgomery",21,0
+62,"Steven Edwards",44,0
+63,"Jennifer Vargas",49,1
+64,"Dawn Harris",74,1
+66,"Justin Velez",36,1
+67,"Sharon Williams",21,0
+68,"Taylor Neal",7,1
+69,"James Lara",8,0
+70,"Megan Mitchell",58,1
+71,"Jeffrey Garner",21,1
+72,"Amy Fowler",61,0
+73,"Anthony Schmidt",34,1
+74,"Linda Raymond",7,1
+75,"Derek Stewart",23,1
