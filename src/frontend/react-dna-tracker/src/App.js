@@ -8,7 +8,7 @@ import DNATestResult from './pages/DNATestResult'
 function App() {
   return (
     <div className="App">
-      <nav>
+      <nav className="navb">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/input-disease">Input Disease</Link></li>
         <li><Link to="/dna-test">DNA Test</Link></li>

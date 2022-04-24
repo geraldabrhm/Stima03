@@ -15,12 +15,30 @@ body {
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
-  border: 1px solid steelblue;
-  padding: 30px;
+  border: 1px solid rgb(16, 17, 17);
+  padding: 10px 20px;
+  padding-bottom: 0px;
   border-radius: 5px;
 }
 
-.header {
+.container2 {
+  max-width: 75%;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 2000px;
+  border: 1px solid rgb(16, 17, 17);
+  padding: 10px 20px;
+  padding-bottom: 0px;
+  border-radius: 5px;
+}
+
+.container2 ul {
+  list-style: none;
+  font-size: 17px;
+  float: left;
+}
+
+.h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,7 +55,7 @@ body {
   color: #fff;
   border: none;
   padding: 10px 20px;
-  margin: 5px;
+  margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
@@ -45,17 +63,8 @@ body {
   font-family: inherit;
 }
 
-.btn:focus {
-  outline: none;
-}
-
 .btn:active {
-  transform: scale(0.98);
-}
-
-.btn-block {
-  display: block;
-  width: 25%;
+  transform: scale(0.97);
 }
 
 .form-control {
@@ -67,24 +76,51 @@ body {
 }
 
 .form-control input {
-  width: 100%;
+  width: 75%;
   height: 40px;
   margin: 5px;
   padding: 3px 7px;
   font-size: 17px;
-}
-
-.form-control-check {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
-.form-control-check label {
-  flex: 1;
+.input [type="date"]{
+  width: 25%;
+  height: 40px;
+  margin: 5px;
+  padding: 3px 7px;
+  font-size: 35px;
 }
 
-.form-control-check input {
-  flex: 2;
-  height: 20px;
+.form-control select {
+  width: 75%;
+  height: 30px;
+  font-size: 17px;
+  padding-left: 7px;
+  margin-top: 5px;
+}
+
+.navb {
+  background-color: #000;
+  overflow: hidden;
+  list-style: none;
+}
+
+.navb a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navb a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.navb a:active {
+  background-color: #04AA6D;
+  color: white;
 }
