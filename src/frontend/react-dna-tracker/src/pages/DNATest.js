@@ -1,8 +1,21 @@
+import React, { useState } from 'react'
+
 export default function DNATest() {
+    const [patientName, setPatientName] = useState("")
+    const [file, setFile] = useState(null)
+
     function handleSubmit(e) {
         e.preventDefault();
     }
     
+    const fileInputHandler = (event) => {
+        setFile(event.target.files[0])
+    }
+
+    const fileSubmitHandler = (event) => {
+        // axios or sequelize
+    }
+
     return (
         <section className="container">
             <h1 className="header">DNA Test</h1>
@@ -11,13 +24,13 @@ export default function DNATest() {
                     <label>
                         Patient name:
                     </label>
-                    <input type="text" placeholder="Input the patient name" />
+                    <input type="text" placeholder="Input the patient name" onChange={e=>setPatientName(e.target.value)}/>
                 </div>
                 <div className="form-control">
                     <label>
                         DNA sequence:
                     </label>
-                    <input type="file"/>
+                    <input type="file" onChange={fileInputHandler}/>
                 </div>
                 <div className="form-control">
                     <label>
@@ -31,7 +44,7 @@ export default function DNATest() {
                     </select>
                 </div>
 
-                <input type='submit' value='Submit Test' className = 'btn'/>
+                <input type='submit' value='Submit Test' className = 'btn' onclick={fileSubmitHandler}/>
             </form>
         </section>
     )
