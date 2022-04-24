@@ -1,13 +1,7 @@
-package main
+package backend
 
-import "regexp"
-
-func checkDNAInput(isiFile string) bool {
-	var re = regexp.MustCompile(`^[AGCT]+$`)
-	return re.MatchString(isiFile)
-}
-
-func border(pattern string) []int {
+//Mencari border function dari sebuah pattern
+func Border(pattern string) []int {
 	var m int = len(pattern)
 	var j int = 0
 	var i int = 1
@@ -29,12 +23,13 @@ func border(pattern string) []int {
 	return border
 }
 
+//String matching dengan KMP
 func KMP(pattern, text string) int {
 	var n int = len(text)
 	var m int = len(pattern)
 	var i int = 0
 	var j int = 0
-	var border []int = border(pattern)
+	var border []int = Border(pattern)
 
 	for i < n {
 		if pattern[j] == text[i] {
@@ -50,15 +45,4 @@ func KMP(pattern, text string) int {
 		}
 	}
 	return -1
-}
-
-func main() {
-	var text string = "AGCTAGCTCGTCGCTAGCTGTCGAGCTCGATCGCTGATAG"
-	var pattern string = "TCGA"
-	//fmt.Scanf("%s", &fileName)
-	if checkDNAInput(text) {
-		print(KMP(pattern, text))
-	} else {
-		print("Input salah")
-	}
 }
