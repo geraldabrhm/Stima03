@@ -1,19 +1,33 @@
 import React, { useState } from 'react'
+import { Endpoints  } from '../API'
 
 export default function DNATest() {
     const [patientName, setPatientName] = useState("")
     const [file, setFile] = useState(null)
 
     function handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
     }
     
     const fileInputHandler = (event) => {
         setFile(event.target.files[0])
     }
 
-    const fileSubmitHandler = (event) => {
-        // axios or sequelize
+    const fileSubmitHandler = async (event) => {
+        // ! Server, Endpoints belum dibuat
+        // TODO Handle file dan select option juga
+        // const res = await fetch(Endpoints.dna_test, {
+        //     method: "PATCH", // GET, POST, PUT, PATCH
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         patientName
+        //     })
+        // }).then(res => {
+        //     return res.json()
+        // }).then(data => console.log(data))
+        // .catch(error => console.log('ErrorMessage'))
     }
 
     return (
@@ -44,8 +58,9 @@ export default function DNATest() {
                     </select>
                 </div>
 
-                <input type='submit' value='Submit Test' className = 'btn' onclick={fileSubmitHandler}/>
+                <input type='submit' value='Submit Test' className = 'btn' onClick={fileSubmitHandler}/>
             </form>
         </section>
     )
 }
+// TODO get list of DiseaseName from server

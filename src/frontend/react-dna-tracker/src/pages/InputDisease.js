@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import axios from 'axios'
+import { Endpoints  } from '../API'
 
 export default function InputDisease() {
     const [diseaseName, setDiseaseName] = useState("")
@@ -13,8 +13,21 @@ export default function InputDisease() {
         setFile(event.target.files[0])
     }
 
-    const fileSubmitHandler = (event) => {
-        // axios or sequelize
+    const fileSubmitHandler = async (event) => {
+        // ! Server, Endpoints belum dibuat
+        // TODO Handle file juga
+        // const res = await fetch(Endpoints.dna_test, {
+        //     method: "PATCH", // GET, POST, PUT, PATCH
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         diseaseName
+        //     })
+        // }).then(res => {
+        //     return res.json()
+        // }).then(data => console.log(data))
+        // .catch(error => console.log('ErrorMessage'))
     }
 
     return (
@@ -34,7 +47,7 @@ export default function InputDisease() {
                     </label>
                     <input type="file" onChange={fileInputHandler}/>
                 </div>
-                <input type='submit' value='Submit Disease' className = 'btn' onChange={fileSubmitHandler}/>
+                <input type='submit' value='Submit Disease' className = 'btn' onClick={fileSubmitHandler}/>
                 {/* <input type='submit' value='Submit Disease' className = 'btn' onChange={e=>setDiseaseName(e.target.value)}/> */}
             </form>
         </section>
