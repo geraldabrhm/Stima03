@@ -1,2 +1,0 @@
-package db
-// Untuk connectornya

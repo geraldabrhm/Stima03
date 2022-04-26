@@ -1,4 +1,4 @@
-package db
+package database
 
 const (
 	GetAllDiseases = `SELECT disease_name FROM disease`
