@@ -28,6 +28,8 @@ export default function InputDisease() {
         //     return res.json()
         // }).then(data => console.log(data))
         // .catch(error => console.log('ErrorMessage'))
+        let a = document.getElementById("disease-file").files[0]
+        console.log(a)
     }
 
     return (
@@ -38,14 +40,14 @@ export default function InputDisease() {
                     <label>
                         Disease name:
                     </label>
-                    <input type="text" placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/>
+                    <input type="text" id="disease-text"placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/>
                     {/* <input type="text" placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/> */}
                 </div>
                 <div className="form-control">
                     <label>
                         DNA sequence:
                     </label>
-                    <input type="file" onChange={fileInputHandler}/>
+                    <input type="file" id="disease-file" onChange={fileInputHandler}/>
                 </div>
                 <input type='submit' value='Submit Disease' className = 'btn' onClick={fileSubmitHandler}/>
                 {/* <input type='submit' value='Submit Disease' className = 'btn' onChange={e=>setDiseaseName(e.target.value)}/> */}
