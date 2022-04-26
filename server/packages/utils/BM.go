@@ -1,4 +1,4 @@
-package backend
+package utils
 
 //Mecari LastOccurence dari sebuah pattern
 func GetL(pattern string) []int {

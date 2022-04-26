@@ -1,4 +1,4 @@
-package backend
+package utils
 
 //Mencari border function dari sebuah pattern
 func Border(pattern string) []int {
