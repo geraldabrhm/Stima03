@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func Middleware(ctx *fiber.Ctx) error{
+func MiddlewareToken(ctx *fiber.Ctx) error{
 	authorizeToken := ctx.Get("x-token")
 
 	if authorizeToken != "FERGUSO" {

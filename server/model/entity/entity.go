@@ -6,7 +6,7 @@ import(
 
 type Disease struct {
 	ID          uint	`gorm:"primary_key;autoIncrement" json:"id"`
-	DiseaseName string	`gorm:"not null" json:"disease_name"`
+	DiseaseName string	`gorm:"not null;unique" json:"disease_name"`
 	DNASequence string	`gorm:"not null" json:"dna_sequence"`
 }
 

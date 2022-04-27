@@ -6,7 +6,9 @@ import (
 	"practice-api/database"
 	"practice-api/model/entity"
 	"practice-api/model/request"
+	"practice-api/utils"
 	"log"
+	// "fmt"
 )
 
 func HandlerRead(ctx *fiber.Ctx) error {
@@ -24,11 +26,6 @@ func HandlerGetAllDisease(ctx *fiber.Ctx) error {
 		log.Println(result.Error)
 	}
 
-	// err := database.DB.Find(&disease).Error
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-
 	return ctx.Status(500).JSON(disease)
 }
 
@@ -45,21 +42,38 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 
 	if errValid != nil {
 		return ctx.Status(400).JSON(fiber.Map{
-			"message": "Failed because required form does not filled",
+			"message": "Failed because required file does not filled",
 			"error": errValid.Error(),
 		})
 	}
 
+	var fileContentStr string
+	fileContent := ctx.Locals("filecontent")
+
+	if fileContent == nil {
+		return ctx.Status(422).JSON(fiber.Map{
+			"message": "File is required to submit new disease or your file might be empty",
+		})
+	} else {
+		fileContentStr = fileContent.(string)
+
+		if !utils.CheckDNAInput(fileContentStr) {
+			return ctx.Status(422).JSON(fiber.Map{
+				"message": "DNA is unacceptable, please check again the DNA Sequence",
+			})
+		}
+	}
+
 	newDisease := entity.Disease {
 		DiseaseName	: disease.DiseaseName,
-		DNASequence	: disease.DNASequence,
+		DNASequence	: fileContentStr,
 	}
 
 	errCreateDisease := database.DB.Create(&newDisease).Error
 
 	if errCreateDisease != nil {
 		return ctx.Status(500).JSON(fiber.Map{
-			"message": "Failed to insert the disease",
+			"message": "Failed to insert the disease, it might be because the disease name is already exist",
 		}) 
 	}
 
@@ -68,6 +82,60 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 		"data": newDisease,
 	})
 }
+
+// func HandlerTestDNA(ctx *fiber.Ctx) error {
+// 	testDNA := new(request.TestDNACreateRequest)
+
+// 	if err := ctx.BodyParser(testDNA); err != nil {
+// 		return err
+// 	}
+
+// 	valid := validator.New()
+
+// 	errValid := valid.Struct(testDNA)
+
+// 	if errValid != nil {
+// 		return ctx.Status(400).JSON(fiber.Map{
+// 			"message": "Failed because required file does not filled",
+// 			"error": errValid.Error(),
+// 		})
+// 	}
+
+// 	var fileContentStr string
+// 	fileContent := ctx.Locals("filecontent2")
+
+// 	if fileContent == nil {
+// 		return ctx.Status(422).JSON(fiber.Map{
+// 			"message": "File is required to submit new disease or your file might be empty",
+// 		})	
+// 	} else {
+// 		fileContentStr = fileContent.(string)
+
+// 		if !utils.CheckDNAInput(fileContentStr) {
+// 			return ctx.Status(422).JSON(fiber.Map{
+// 				"message": "DNA is unacceptable, please check again the DNA Sequence",
+// 			})
+// 		}
+// 	}
+
+// 	newPatient := request.TestDNACreateRequest {
+// 		PatientName	: testDNA.PatientName,
+// 		PatientDNA : fileContentStr,
+// 	}
+
+// 	errCreateDisease := database.DB.Create(&newPatient).Error
+
+// 	if errCreateDisease != nil {
+// 		return ctx.Status(500).JSON(fiber.Map{
+// 			"message": "Failed to insert the disease, it might be because the disease name is already exist",
+// 		}) 
+// 	}
+
+// 	return ctx.JSON(fiber.Map{
+// 		"message": "Successed insert the new disease",
+// 		"data": newPatient,
+// 	})
+// }
 
 func HandlerGetDiseasebyID(ctx* fiber.Ctx) error {
 	diseaseId := ctx.Params("id")
