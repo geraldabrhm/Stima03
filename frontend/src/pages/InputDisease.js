@@ -7,6 +7,8 @@ export default function InputDisease() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        const formDisease = document.getElementById('disease-form')
+        formDisease.reset();
     }
 
     const fileInputHandler = (event) => {
@@ -14,33 +16,33 @@ export default function InputDisease() {
     }
 
     const fileSubmitHandler = async (event) => {
-        // ! Server, Endpoints belum dibuat
-        // TODO Handle file juga
-        // const res = await fetch(Endpoints.dna_test, {
-        //     method: "PATCH", // GET, POST, PUT, PATCH
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         diseaseName
-        //     })
-        // }).then(res => {
-        //     return res.json()
-        // }).then(data => console.log(data))
-        // .catch(error => console.log('ErrorMessage'))
-        let a = document.getElementById("disease-file").files[0]
-        console.log(a)
+        var fileInput = document.getElementById("disease-file").files[0]
+        var dataFetch = new FormData()
+
+        dataFetch.append('DiseaseName', diseaseName)
+        dataFetch.append('DNASequence', fileInput)
+
+        const res = await fetch(Endpoints.disease, {
+            method: "POST", // GET, POST, PUT, PATCH
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            body: dataFetch
+        }).then(res => {
+            return res.json()
+        }).then(data => console.log(data))
+        .catch(error => console.log('ErrorMessage: ', error))
     }
 
     return (
         <section className="container">
             <h1 className="header">Input Disease</h1>
-            <form onSubmit={handleSubmit} className="add-form">
+            <form onSubmit={handleSubmit} className="add-form" id="disease-form">
                 <div className="form-control">
                     <label>
                         Disease name:
                     </label>
-                    <input type="text" id="disease-text"placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/>
+                    <input type="text" id="disease-text" placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/>
                     {/* <input type="text" placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/> */}
                 </div>
                 <div className="form-control">

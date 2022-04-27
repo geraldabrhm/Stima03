@@ -1,21 +1,21 @@
 package utils
 
-import (
-	"fmt"
-	"io/ioutil"
-	"log"
+// import (
+// 	"fmt"
+// 	"io/ioutil"
+// 	"log"
 
-	be "src/backend"
+// 	be "src/backend"
 
-	_ "github.com/go-sql-driver/mysql"
-)
+// 	_ "github.com/go-sql-driver/mysql"
+// )
 
-func main() {
-	var fileName string
-	fmt.Scanf("%s", &fileName)
-	body, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		log.Fatalf("unable to read file: %v", err)
-	}
-	fmt.Println(be.CheckDNAInput(string(body)))
-}
+// func main() {
+// 	var fileName string
+// 	fmt.Scanf("%s", &fileName)
+// 	body, err := ioutil.ReadFile(fileName)
+// 	if err != nil {
+// 		log.Fatalf("unable to read file: %v", err)
+// 	}
+// 	fmt.Println(be.CheckDNAInput(string(body)))
+// }

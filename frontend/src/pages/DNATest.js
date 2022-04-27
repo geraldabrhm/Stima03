@@ -57,9 +57,20 @@ export default function DNATest() {
                         <option>Penyakit 4</option>
                     </select>
                 </div>
+                <div className="form-control">
+                    <label>
+                        Algoritma pattern-matching:
+                    </label>
+                    <select>
+                        <option>Knuth-Morris-Pratt</option>
+                        <option>Boyer-Moore</option>
+                    </select>
+                </div>
 
                 <input type='submit' value='Submit Test' className = 'btn' onClick={fileSubmitHandler}/>
             </form>
+            <h2>Test Result</h2>
+            <p id="resultTest">Result</p>
         </section>
     )
 }
