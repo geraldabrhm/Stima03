@@ -1,13 +1,14 @@
 package handler
 
 import (
-	"github.com/gofiber/fiber/v2"
-	"github.com/go-playground/validator/v10"
+	"log"
 	"practice-api/database"
 	"practice-api/model/entity"
 	"practice-api/model/request"
 	"practice-api/utils"
-	"log"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/gofiber/fiber/v2"
 	// "fmt"
 )
 
@@ -43,7 +44,7 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 	if errValid != nil {
 		return ctx.Status(400).JSON(fiber.Map{
 			"message": "Failed because required file does not filled",
-			"error": errValid.Error(),
+			"error":   errValid.Error(),
 		})
 	}
 
@@ -64,9 +65,9 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 		}
 	}
 
-	newDisease := entity.Disease {
-		DiseaseName	: disease.DiseaseName,
-		DNASequence	: fileContentStr,
+	newDisease := entity.Disease{
+		DiseaseName: disease.DiseaseName,
+		DNASequence: fileContentStr,
 	}
 
 	errCreateDisease := database.DB.Create(&newDisease).Error
@@ -74,12 +75,12 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 	if errCreateDisease != nil {
 		return ctx.Status(500).JSON(fiber.Map{
 			"message": "Failed to insert the disease, it might be because the disease name is already exist",
-		}) 
+		})
 	}
 
 	return ctx.JSON(fiber.Map{
 		"message": "Successed insert the new disease",
-		"data": newDisease,
+		"data":    newDisease,
 	})
 }
 
@@ -107,7 +108,7 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 // 	if fileContent == nil {
 // 		return ctx.Status(422).JSON(fiber.Map{
 // 			"message": "File is required to submit new disease or your file might be empty",
-// 		})	
+// 		})
 // 	} else {
 // 		fileContentStr = fileContent.(string)
 
@@ -128,7 +129,7 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 // 	if errCreateDisease != nil {
 // 		return ctx.Status(500).JSON(fiber.Map{
 // 			"message": "Failed to insert the disease, it might be because the disease name is already exist",
-// 		}) 
+// 		})
 // 	}
 
 // 	return ctx.JSON(fiber.Map{
@@ -137,7 +138,7 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 // 	})
 // }
 
-func HandlerGetDiseasebyID(ctx* fiber.Ctx) error {
+func HandlerGetDiseasebyID(ctx *fiber.Ctx) error {
 	diseaseId := ctx.Params("id")
 
 	var disease entity.Disease
@@ -151,6 +152,45 @@ func HandlerGetDiseasebyID(ctx* fiber.Ctx) error {
 
 	return ctx.Status(404).JSON(fiber.Map{
 		"message": "Success get disease by id",
-		"data": disease,
+		"data":    disease,
+	})
+}
+
+func HandlerGetResultByDate(ctx *fiber.Ctx) error {
+	date := ctx.Params("created_at")
+	dateReal := date[0:10]
+
+	var result entity.PredictionResult
+
+	err := database.DB.Find(&result, "date(created_at) = ?", dateReal).Error
+	if err != nil {
+		return ctx.Status(404).JSON(fiber.Map{
+			"message": "Failed to get result by date",
+		})
+	}
+
+	return ctx.Status(404).JSON(fiber.Map{
+		"message": "Success get result by date",
+		"data":    result,
+	})
+}
+
+func HandlerGetResultByDateAndIDPenyakit(ctx *fiber.Ctx) error {
+	date := ctx.Params("created_at")
+	dateReal := date[0:10]
+	diseaseId := ctx.Params("id_disease")
+
+	var result entity.PredictionResult
+
+	err := database.DB.Find(&result, "date(created_at) = ? AND id_disease = ?", dateReal, diseaseId).Error
+	if err != nil {
+		return ctx.Status(404).JSON(fiber.Map{
+			"message": "Failed to get result by date and disease id",
+		})
+	}
+
+	return ctx.Status(404).JSON(fiber.Map{
+		"message": "Success get result by date and disease id",
+		"data":    result,
 	})
 }
