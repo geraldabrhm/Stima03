@@ -84,59 +84,75 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 	})
 }
 
-// func HandlerTestDNA(ctx *fiber.Ctx) error {
-// 	testDNA := new(request.TestDNACreateRequest)
+func HandlerTestDNA(ctx *fiber.Ctx) error {
+	testDNA := new(request.TestDNACreateRequest)
 
-// 	if err := ctx.BodyParser(testDNA); err != nil {
-// 		return err
-// 	}
+	if err := ctx.BodyParser(testDNA); err != nil {
+		return err
+	}
 
-// 	valid := validator.New()
+	valid := validator.New()
 
-// 	errValid := valid.Struct(testDNA)
+	errValid := valid.Struct(testDNA)
 
-// 	if errValid != nil {
-// 		return ctx.Status(400).JSON(fiber.Map{
-// 			"message": "Failed because required file does not filled",
-// 			"error": errValid.Error(),
-// 		})
-// 	}
+	if errValid != nil {
+		return ctx.Status(400).JSON(fiber.Map{
+			"message": "Failed because required file does not filled",
+			"error":   errValid.Error(),
+		})
+	}
 
-// 	var fileContentStr string
-// 	fileContent := ctx.Locals("filecontent2")
+	var fileContentStr string
+	fileContent := ctx.Locals("filecontent2")
 
-// 	if fileContent == nil {
-// 		return ctx.Status(422).JSON(fiber.Map{
-// 			"message": "File is required to submit new disease or your file might be empty",
-// 		})
-// 	} else {
-// 		fileContentStr = fileContent.(string)
+	if fileContent == nil {
+		return ctx.Status(422).JSON(fiber.Map{
+			"message": "File DNA Sequence is required to test DNA or your file might be empty",
+		})
+	} else {
+		fileContentStr = fileContent.(string)
 
-// 		if !utils.CheckDNAInput(fileContentStr) {
-// 			return ctx.Status(422).JSON(fiber.Map{
-// 				"message": "DNA is unacceptable, please check again the DNA Sequence",
-// 			})
-// 		}
-// 	}
+		if !utils.CheckDNAInput(fileContentStr) {
+			return ctx.Status(422).JSON(fiber.Map{
+				"message": "DNA is unacceptable, please check again the DNA Sequence",
+			})
+		}
 
-// 	newPatient := request.TestDNACreateRequest {
-// 		PatientName	: testDNA.PatientName,
-// 		PatientDNA : fileContentStr,
-// 	}
+	}
 
-// 	errCreateDisease := database.DB.Create(&newPatient).Error
+	var disease entity.Disease
 
-// 	if errCreateDisease != nil {
-// 		return ctx.Status(500).JSON(fiber.Map{
-// 			"message": "Failed to insert the disease, it might be because the disease name is already exist",
-// 		})
-// 	}
+	err := database.DB.First(&disease, "id = ?", testDNA.IDDisease).Error
+	if err != nil {
+		return ctx.Status(404).JSON(fiber.Map{
+			"message": "Failed to get disease by id",
+		})
+	}
 
-// 	return ctx.JSON(fiber.Map{
-// 		"message": "Successed insert the new disease",
-// 		"data": newPatient,
-// 	})
-// }
+	newPatient := request.TestDNACreateRequest{
+		PatientName:      testDNA.PatientName,
+		IDDisease:        testDNA.IDDisease,
+		PatientDNA:       fileContentStr,
+		PredictionStatus: true,
+	}
+
+	if utils.BoyerMoore(disease.DNASequence, fileContentStr) == -1 {
+		newPatient.PredictionStatus = false
+	}
+
+	errCreatePatientValue := database.DB.Create(&newPatient).Error
+
+	if errCreatePatientValue != nil {
+		return ctx.Status(500).JSON(fiber.Map{
+			"message": "Failed to insert new prediction value",
+		})
+	}
+
+	return ctx.JSON(fiber.Map{
+		"message": "Successed insert the new prediction",
+		"data":    newPatient,
+	})
+}
 
 func HandlerGetDiseasebyID(ctx *fiber.Ctx) error {
 	diseaseId := ctx.Params("id")
