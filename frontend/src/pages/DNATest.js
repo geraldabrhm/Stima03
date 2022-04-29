@@ -35,17 +35,18 @@ export default function DNATest() {
             return res.json()
         }).catch(error => console.log('ErrorMessage: ', error))
 
-        // const lastRes = await fetch(Endpoints.lastResult, {
-        //     method: "GET"
-        // }).then(res => {
-        //     return res.json()
-        // }).then(data => {
-        //     console.log(data)
-        // }).catch(err => {
-        //     console.log('ErrorMessage: (Get) ', err)
-        // })
+        const lastRes = await fetch(Endpoints.lastResult, {
+            method: "GET"
+        }).then(res => {
+            return res.json()
+        }).then(data => {
+            console.log(data)
+        }).catch(err => {
+            console.log('ErrorMessage: (Get) ', err)
+        })
 
-        // console.log(lastRes)
+        const val = await lastRes.json()
+        console.log(val)
     }
 
     return (
