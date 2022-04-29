@@ -9,7 +9,6 @@ export default function DNATestResult() {
     }
 
     const fileSubmitHandler = async (event) => {
-        // ! Server, Endpoints belum dibuat
         // const res = await fetch(Endpoints.dna_test_result, {
         //     method: "GET", // GET, POST, PUT, PATCH
         //     headers: {
@@ -24,13 +23,13 @@ export default function DNATestResult() {
         var disease_name = document.getElementById("disease-name").value
     }
 
-    const prevResult = () => {
+    // const prevResult = () => {
         
-    }
+    // }
 
-    const nextResult = () => {
+    // const nextResult = () => {
 
-    }
+    // }
 
 
 
@@ -59,8 +58,8 @@ export default function DNATestResult() {
                 <li>D</li>
                 <li>E</li>
             </ul>
-            <input type='submit' value='Previous' className = 'btn-prev' onClick={nextResult}/>
-            <input type='submit' value='Next' className = 'btn-next' onClick={nextResult}/>
+            {/* <input type='submit' value='Previous' className = 'btn-prev' onClick={nextResult}/>
+            <input type='submit' value='Next' className = 'btn-next' onClick={nextResult}/> */}
             
         </section>
     )

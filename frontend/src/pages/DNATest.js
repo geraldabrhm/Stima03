@@ -8,8 +8,8 @@ export default function DNATest() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        // const formPatient = document.getElementById('form-dis')
-        // formPatient.reset();
+        const formPatient = document.getElementById('form-dis')
+        formPatient.reset();
     }
     
     const fileInputHandler = (event) => {
@@ -17,25 +17,35 @@ export default function DNATest() {
     }
 
     const fileSubmitHandler = async () => {
-        // ! Server, Endpoints belum dibuat
-        // TODO Handle file dan select option juga
         var fileInput2 = document.getElementById("patient-file").files[0]
         var dataFetch2 = new FormData()
 
         dataFetch2.append('PatientName', patientName)
         dataFetch2.append('IDDisease', diseaseName2)
         dataFetch2.append('PatientDNA', fileInput2)
-        console.log(Endpoints.patientBM)
+        
         const res = await fetch(Endpoints.patientBM, {
-            method: "POST", // GET, POST, PUT, PATCH
+            method: "POST",
             // headers: {
             //     'Content-Type': 'application/json'
             // },
+            // header: "origin",
             body: dataFetch2
         }).then(res => {
             return res.json()
-        }).then(data => console.log(data))
-        .catch(error => console.log('ErrorMessage: ', error))
+        }).catch(error => console.log('ErrorMessage: ', error))
+
+        // const lastRes = await fetch(Endpoints.lastResult, {
+        //     method: "GET"
+        // }).then(res => {
+        //     return res.json()
+        // }).then(data => {
+        //     console.log(data)
+        // }).catch(err => {
+        //     console.log('ErrorMessage: (Get) ', err)
+        // })
+
+        // console.log(lastRes)
     }
 
     return (

@@ -277,3 +277,19 @@ func HandlerGetResultByDateAndIDPenyakit(ctx *fiber.Ctx) error {
 		"data":    result,
 	})
 }
+
+func HandlerGetLastResult(ctx *fiber.Ctx) error {
+	var pred entity.PredictionResult
+
+	err := database.DB.Last(&pred).Error
+	if err != nil {
+		return ctx.Status(404).JSON(fiber.Map{
+			"message": "Failed to get last result",
+		})
+	}
+
+	return ctx.JSON(fiber.Map{
+		"message": "Success get last result",
+		"data":    pred,
+	})
+}

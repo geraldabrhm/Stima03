@@ -15,6 +15,7 @@ func RouteInit(r *fiber.App) {
 	r.Get("/api/disease/:id", handler.HandlerGetDiseasebyID)
 	r.Get("/api/prediction/:created_at", handler.HandlerGetResultByDate)                          //smua
 	r.Get("/api/prediction/:created_at/:id_disease", handler.HandlerGetResultByDateAndIDPenyakit) //date
+	r.Get("/api/prediction-last", handler.HandlerGetLastResult)
 	r.Post("/api/patient/bm", utils.HandleFileUploadPatient, handler.HandlerTestDNABM)
 	r.Post("/api/patient/kmp", utils.HandleFileUploadPatient, handler.HandlerTestDNAKMP)
 }
