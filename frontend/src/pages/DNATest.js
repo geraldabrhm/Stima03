@@ -35,18 +35,22 @@ export default function DNATest() {
             return res.json()
         }).catch(error => console.log('ErrorMessage: ', error))
 
+        var result1, result2, result3, result4
+
         const lastRes = await fetch(Endpoints.lastResult, {
             method: "GET"
         }).then(res => {
             return res.json()
         }).then(data => {
-            console.log(data)
+            console.log(data.data)
+            result1 = data.data.created_at
+            result2 = data.data.patient_name
+            result3 = data.data.id_disease
+            result4 = data.data.prediction_status
         }).catch(err => {
             console.log('ErrorMessage: (Get) ', err)
         })
-
-        const val = await lastRes.json()
-        console.log(val)
+        document.getElementById("resultTest").innerHTML = result1 + " - " + result2 + " - " + result3 + " - " + result4
     }
 
     return (
@@ -83,7 +87,7 @@ export default function DNATest() {
 
                 <input type='submit' value='Submit Test' className = 'btn' onClick={fileSubmitHandler}/>
             </form>
-            <h2>Test Result</h2>
+            <h2>Last Result</h2>
             <p id="resultTest">Result</p>
         </section>
     )

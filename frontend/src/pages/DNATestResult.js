@@ -8,19 +8,33 @@ export default function DNATestResult() {
         e.preventDefault();
     }
 
-    const fileSubmitHandler = async (event) => {
-        // const res = await fetch(Endpoints.dna_test_result, {
-        //     method: "GET", // GET, POST, PUT, PATCH
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        // }).then(res => {
-        //     return res.json()
-        // }).then(data => console.log(data))
-        // .catch(error => console.log('ErrorMessage'))
-
+    const fileSubmitHandler = async () => {
         var date_val = document.getElementById("dna_result_date").value
         var disease_name = document.getElementById("disease-name").value
+        var result
+        var lastEnd = Endpoints.prediction.concat("/" + date_val)
+        // if(diseaseName == "") {
+        //     const lastRes = await fetch(lastEnd, {
+        //         method: "GET"
+        //     }).then(res => {
+        //         return res.json()
+        //     }).then(data => {
+        //         console.log(data.data)
+        //     }).catch(err => {
+        //         console.log('ErrorMessage: (Get) ', err)
+        //     })
+        //     for 
+        // } else {
+        //     const lastRes = await fetch(lastEnd.concat("/" + disease_name), {
+        //         method: "GET"
+        //     }).then(res => {
+        //         return res.json()
+        //     }).then(data => {
+        //         console.log(data.data)
+        //     }).catch(err => {
+        //         console.log('ErrorMessage: (Get) ', err)
+        //     })
+        // }
     }
 
     // const prevResult = () => {

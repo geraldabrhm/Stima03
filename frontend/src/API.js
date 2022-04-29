@@ -6,6 +6,7 @@ export const Endpoints = {
   patientKMP: `${apiURl}/api/patient/kmp`,
   patientBM: `${apiURl}/api/patient/bm`,
   lastResult: `${apiURl}/api/prediction-last`,
+  prediction: `${apiURl}/api/prediction`
   // dna_test: `${apiURl}/api/dna-test`,
   // dna_test_result: `${apiURl}/api/dna-test-result`,
 }
