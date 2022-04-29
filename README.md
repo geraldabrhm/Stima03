@@ -40,8 +40,33 @@ root
 ```
 
 ## Requirements
+* Telah meng-*install* MySQL
+* Memiliki sebuah database kosong di MySQL 
+* Membuka file ../server/config/database.go kemudian mengubah line 15 sebagai berikut
+```
+const MYSQL = "{username mySQL}:{password mySQL}@tcp(127.0.0.1:3306)/{nama database kosong di mySQL}?charset=utf8mb4&parseTime=True&loc=Local"
+```
+* Memiliki extension/plug-in browser Moesif Origin & CORS Changer serta menghidupkannya (jalan lupa untuk mematikannya setelah selesai menjalankan kode)
+* Masuk ke folder frontend kemudian menjalankan command berikut di cmd
+```
+npm install
+```
+* Telah meng-*install* Golang
 
 ## How to Use
+1. Clone repository ini
+2. Jalankan repo hasil clone di cmd
+3. Jalankan command berikut di cmd
+```
+cd server
+cd go run main.go
+```
+4. Buka cmd yang baru tanpa menutup cmd yang lama kemudian jalankan repo 
+5. Jalankan command berikut di cmd
+```
+cd frontend
+cd start
+```
 
 ## Anggota Kelompok
 * 13520133 Jevant Jedidia Augustine
