@@ -3,11 +3,13 @@ import { Endpoints  } from '../API'
 
 export default function DNATest() {
     const [patientName, setPatientName] = useState("")
-    const [diseaseName, setDiseaseName] = useState("")
+    const [diseaseName2, setDiseaseName2] = useState("")
     const [file, setFile] = useState(null)
 
     function handleSubmit(e) {
         e.preventDefault()
+        // const formPatient = document.getElementById('form-dis')
+        // formPatient.reset();
     }
     
     const fileInputHandler = (event) => {
@@ -17,45 +19,29 @@ export default function DNATest() {
     const fileSubmitHandler = async () => {
         // ! Server, Endpoints belum dibuat
         // TODO Handle file dan select option juga
-        // const res = await fetch(Endpoints.dna_test, {
-        //     method: "PATCH", // GET, POST, PUT, PATCH
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         patientName
-        //     })
-        // }).then(res => {
-        //     return res.json()
-        // }).then(data => console.log(data))
-        // .catch(error => console.log('ErrorMessage'))
-        var head = {
-            'Access-Control-Allow-Origin': 'http://localhost:8080/api/disease/',
-            'Access-Control-Allow-Credentials': 'true',
-        }
+        var fileInput2 = document.getElementById("patient-file").files[0]
+        var dataFetch2 = new FormData()
 
-        const res = await fetch("http://localhost:8080/api/disease/", {
-            method: "GET",
-            // mode: "no-cors",
+        dataFetch2.append('PatientName', patientName)
+        dataFetch2.append('IDDisease', diseaseName2)
+        dataFetch2.append('PatientDNA', fileInput2)
+        console.log(Endpoints.patientBM)
+        const res = await fetch(Endpoints.patientBM, {
+            method: "POST", // GET, POST, PUT, PATCH
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            body: dataFetch2
         }).then(res => {
-            console.log("Ini res")
-            console.log(res)
-            console.log("Ini res.json()")
-            console.log(res.json())
-            res.json()
-        }).then(data => {
-            console.log("Ini data")
-            console.log(data)
-        }).catch(err => {
-            console.log("Error bingung: ", err)
-        })
-        document.getElementById("patient-name").value = res
+            return res.json()
+        }).then(data => console.log(data))
+        .catch(error => console.log('ErrorMessage: ', error))
     }
 
     return (
         <section className="container">
             <h1 className="header">DNA Test</h1>
-            <form onSubmit={handleSubmit} className="add-form">
+            <form onSubmit={handleSubmit} className="add-form" id="form-dis">
                 <div className="form-control">
                     <label>
                         Patient name:
@@ -66,13 +52,13 @@ export default function DNATest() {
                     <label>
                         DNA sequence:
                     </label>
-                    <input type="file" id="patient-dna-file" onChange={fileInputHandler}/>
+                    <input type="file" id="patient-file" onChange={fileInputHandler}/>
                 </div>
                 <div className="form-control">
                     <label>
                         Disease to predict:
                     </label>
-                    <input type="text" id="disease-name" placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/>
+                    <input type="text" id="disease-namee" placeholder="Input the disease id" onChange={e=>setDiseaseName2(e.target.value)}/>
                 </div>
                 <div className="form-control">
                     <label>

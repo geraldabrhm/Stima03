@@ -6,6 +6,7 @@ import (
 	"dna-go-app/model/entity"
 	"dna-go-app/model/request"
 	"dna-go-app/utils"
+	"fmt"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
@@ -82,7 +83,7 @@ func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
 	})
 }
 
-func HandlerTestDNA(ctx *fiber.Ctx) error {
+func HandlerTestDNABM(ctx *fiber.Ctx) error {
 	testDNA := new(request.TestDNACreateRequest)
 
 	if err := ctx.BodyParser(testDNA); err != nil {
@@ -127,14 +128,82 @@ func HandlerTestDNA(ctx *fiber.Ctx) error {
 		})
 	}
 
-	newPatient := request.TestDNACreateRequest{
+	newPatient := entity.PredictionResult{
 		PatientName:      testDNA.PatientName,
-		IDDisease:        testDNA.IDDisease,
-		PatientDNA:       fileContentStr,
+		IDDisease:        int(disease.ID),
 		PredictionStatus: true,
 	}
 
 	if utils.BoyerMoore(disease.DNASequence, fileContentStr) == -1 {
+		newPatient.PredictionStatus = false
+	}
+
+	errCreatePatientValue := database.DB.Create(&newPatient).Error
+
+	if errCreatePatientValue != nil {
+		return ctx.Status(500).JSON(fiber.Map{
+			"message": "Failed to insert new prediction value",
+		})
+	}
+
+	return ctx.JSON(fiber.Map{
+		"message": "Successed insert the new prediction",
+		"data":    newPatient,
+	})
+}
+
+func HandlerTestDNAKMP(ctx *fiber.Ctx) error {
+	testDNA := new(request.TestDNACreateRequest)
+
+	if err := ctx.BodyParser(testDNA); err != nil {
+		return err
+	}
+
+	valid := validator.New()
+
+	errValid := valid.Struct(testDNA)
+
+	if errValid != nil {
+		return ctx.Status(400).JSON(fiber.Map{
+			"message": "Failed because required file does not filled",
+			"error":   errValid.Error(),
+		})
+	}
+
+	var fileContentStr string
+	fileContent := ctx.Locals("filecontent2")
+
+	if fileContent == nil {
+		return ctx.Status(422).JSON(fiber.Map{
+			"message": "File DNA Sequence is required to test DNA or your file might be empty",
+		})
+	} else {
+		fileContentStr = fileContent.(string)
+
+		if !utils.CheckDNAInput(fileContentStr) {
+			return ctx.Status(422).JSON(fiber.Map{
+				"message": "DNA is unacceptable, please check again the DNA Sequence",
+			})
+		}
+
+	}
+
+	var disease entity.Disease
+
+	err := database.DB.First(&disease, "id = ?", testDNA.IDDisease).Error
+	if err != nil {
+		return ctx.Status(404).JSON(fiber.Map{
+			"message": "Failed to get disease by id",
+		})
+	}
+
+	newPatient := entity.PredictionResult{
+		PatientName:      testDNA.PatientName,
+		IDDisease:        int(disease.ID),
+		PredictionStatus: true,
+	}
+
+	if utils.KMP(disease.DNASequence, fileContentStr) == -1 {
 		newPatient.PredictionStatus = false
 	}
 
@@ -172,11 +241,13 @@ func HandlerGetDiseasebyID(ctx *fiber.Ctx) error {
 
 func HandlerGetResultByDate(ctx *fiber.Ctx) error {
 	date := ctx.Params("created_at")
-	dateReal := date[0:10]
+	// dateReal := date[0:10]
 
-	var result entity.PredictionResult
+	var result []entity.PredictionResult
+	fmt.Println(date)
 
-	err := database.DB.Find(&result, "date(created_at) = ?", dateReal).Error
+	err := database.DB.Where("date(created_at) = ?", date).Find(&result).Error
+	fmt.Println(result)
 	if err != nil {
 		return ctx.Status(404).JSON(fiber.Map{
 			"message": "Failed to get result by date",
