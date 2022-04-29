@@ -244,7 +244,6 @@ func HandlerGetResultByDate(ctx *fiber.Ctx) error {
 	// dateReal := date[0:10]
 
 	var result []entity.PredictionResult
-	fmt.Println(date)
 
 	err := database.DB.Where("date(created_at) = ?", date).Find(&result).Error
 	fmt.Println(result)
@@ -262,12 +261,11 @@ func HandlerGetResultByDate(ctx *fiber.Ctx) error {
 
 func HandlerGetResultByDateAndIDPenyakit(ctx *fiber.Ctx) error {
 	date := ctx.Params("created_at")
-	dateReal := date[0:10]
 	diseaseId := ctx.Params("id_disease")
 
-	var result entity.PredictionResult
+	var result []entity.PredictionResult
 
-	err := database.DB.Find(&result, "date(created_at) = ? AND id_disease = ?", dateReal, diseaseId).Error
+	err := database.DB.Find(&result, "date(created_at) = ? AND id_disease = ?", date, diseaseId).Error
 	if err != nil {
 		return ctx.Status(404).JSON(fiber.Map{
 			"message": "Failed to get result by date and disease id",
