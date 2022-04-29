@@ -5,21 +5,24 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	// "gorm.io/driver/postgres"
 )
 
 var DB *gorm.DB
 
 func DatabaseInit() {
 	var err error
-	// const MYSQL = "root:asdf@tcp(127.0.0.1:3306)/penyakit?charset=utf8mb4&parseTime=True&loc=Local"
-	const MYSQL = "root:root@tcp(127.0.0.1:3306)/random_scheme?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := MYSQL
+	var database_config, uname, pass, host, port string
+	fmt.Print("Database username: ")
+	fmt.Scanln(&uname)
+	fmt.Print("Database password: ")
+	fmt.Scanln(&pass)
+	fmt.Print("Database host(ex.127.0.0.0): ")
+	fmt.Scanln(&host)
+	fmt.Print("Database port: ")
+	fmt.Scanln(&port)
+	database_config = fmt.Sprintf("%s:%s@tcp(%s:%s)/random_scheme?charset=utf8mb4&parseTime=True&loc=Local", uname, pass, host, port)
+	dsn := database_config
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
-	// const POSTGRES = "host=localhost user=postgres password=root dbname=dna_tracker port=5432 sslmode=disable TimeZone=Asia/Shanghai"
-	// dsn := POSTGRES
-	// DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic("Cannot connect to database")
