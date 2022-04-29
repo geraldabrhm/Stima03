@@ -11,30 +11,37 @@ export default function DNATestResult() {
     const fileSubmitHandler = async () => {
         var date_val = document.getElementById("dna_result_date").value
         var disease_name = document.getElementById("disease-name").value
-        var result
+        var text
         var lastEnd = Endpoints.prediction.concat("/" + date_val)
-        // if(diseaseName == "") {
-        //     const lastRes = await fetch(lastEnd, {
-        //         method: "GET"
-        //     }).then(res => {
-        //         return res.json()
-        //     }).then(data => {
-        //         console.log(data.data)
-        //     }).catch(err => {
-        //         console.log('ErrorMessage: (Get) ', err)
-        //     })
-        //     for 
-        // } else {
-        //     const lastRes = await fetch(lastEnd.concat("/" + disease_name), {
-        //         method: "GET"
-        //     }).then(res => {
-        //         return res.json()
-        //     }).then(data => {
-        //         console.log(data.data)
-        //     }).catch(err => {
-        //         console.log('ErrorMessage: (Get) ', err)
-        //     })
-        // }
+        if(diseaseName == "") {
+            const lastRes = await fetch(lastEnd, {
+                method: "GET"
+            }).then(res => {
+                return res.json()
+            }).then(data => {
+                console.log(data.data)
+                for (let i = 0; i < data.data.length; i++) {
+                    text += data.data[i].created_at + " - " + data.data[i].patient_name +  "<br>";
+                }
+            }).catch(err => {
+                console.log('ErrorMessage: (Get) ', err)
+            })
+            
+        } else {
+            const lastRes = await fetch(lastEnd.concat("/" + disease_name), {
+                method: "GET"
+            }).then(res => {
+                return res.json()
+            }).then(data => {
+                console.log(data.data)
+                for (let i = 0; i < data.data.length; i++) {
+                    text += data.data[i].created_at + " - " + data.data[i].patient_name +  "<br>";
+                }
+            }).catch(err => {
+                console.log('ErrorMessage: (Get) ', err)
+            })
+        }
+        document.getElementById("result-test").innerHTML = text
     }
 
     // const prevResult = () => {
@@ -65,13 +72,7 @@ export default function DNATestResult() {
                 </div>
                 <input type='submit' value='Find Result' className = 'btn' onClick={fileSubmitHandler}/>
             </form>
-            <ul>
-                <li>A</li>
-                <li>B</li>
-                <li>C</li>
-                <li>D</li>
-                <li>E</li>
-            </ul>
+            <p id="result-test">Result</p>
             {/* <input type='submit' value='Previous' className = 'btn-prev' onClick={nextResult}/>
             <input type='submit' value='Next' className = 'btn-next' onClick={nextResult}/> */}
             
