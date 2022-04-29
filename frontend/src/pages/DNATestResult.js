@@ -1,6 +1,9 @@
+import React, { useState } from 'react'
 import { Endpoints  } from '../API'
 
 export default function DNATestResult() {
+    const [diseaseName, setDiseaseName] = useState("")
+    const [dateTest, setDateTest] = useState()
     function handleSubmit(e) {
         e.preventDefault();
     }
@@ -17,7 +20,8 @@ export default function DNATestResult() {
         // }).then(data => console.log(data))
         // .catch(error => console.log('ErrorMessage'))
 
-        const date_val = document.getElementById("dna_result_date").value
+        var date_val = document.getElementById("dna_result_date").value
+        var disease_name = document.getElementById("disease-name").value
     }
 
     const prevResult = () => {
@@ -38,18 +42,13 @@ export default function DNATestResult() {
                     <label>
                         Date test:
                     </label>
-                    <input type="date" id="dna_result_date"/>
+                    <input type="date" id="dna_result_date" onChange={e=>setDateTest(e.target.value)}/>
                 </div>
                 <div className="form-control">
                     <label>
                         Disease name:
                     </label>
-                    <select>
-                        <option>Penyakit 1</option>
-                        <option>Penyakit 2</option>
-                        <option>Penyakit 3</option>
-                        <option>Penyakit 4</option>
-                    </select>
+                    <input type="text" id="disease-name" placeholder="Input the disease name" onChange={e=>setDiseaseName(e.target.value)}/>
                 </div>
                 <input type='submit' value='Find Result' className = 'btn' onClick={fileSubmitHandler}/>
             </form>

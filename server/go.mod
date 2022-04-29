@@ -1,4 +1,5 @@
-module practice-api
+// +heroku goVersion go1.18
+module dna-go-app
 
 go 1.18
 

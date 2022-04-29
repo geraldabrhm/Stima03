@@ -1,9 +1,10 @@
 package main
 
 import (
-	"practice-api/route"
-	"practice-api/database"
-	"practice-api/migration"
+	"dna-go-app/database"
+	"dna-go-app/migration"
+	"dna-go-app/route"
+
 	"github.com/gofiber/fiber/v2"
 )
 

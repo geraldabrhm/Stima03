@@ -1,10 +1,10 @@
 package migration
 
 import (
-	"practice-api/database"
-	"practice-api/model/entity"
-	"log"
+	"dna-go-app/database"
+	"dna-go-app/model/entity"
 	"fmt"
+	"log"
 )
 
 func RunMigration() {

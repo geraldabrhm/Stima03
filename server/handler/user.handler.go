@@ -1,33 +1,31 @@
 package handler
 
 import (
-	"log"
-	"practice-api/database"
-	"practice-api/model/entity"
-	"practice-api/model/request"
-	"practice-api/utils"
+	// "log"
+	"dna-go-app/database"
+	"dna-go-app/model/entity"
+	"dna-go-app/model/request"
+	"dna-go-app/utils"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	// "fmt"
 )
 
-func HandlerRead(ctx *fiber.Ctx) error {
-
-	return ctx.Status(500).JSON(fiber.Map{
-		"Hello": "world",
-	})
-}
-
 func HandlerGetAllDisease(ctx *fiber.Ctx) error {
 	var disease []entity.Disease
 
 	result := database.DB.Find(&disease)
 	if result.Error != nil {
-		log.Println(result.Error)
+		return ctx.Status(400).JSON(fiber.Map{
+			"message": "Failed get all diseases",
+		})
 	}
 
-	return ctx.Status(500).JSON(disease)
+	return ctx.JSON(fiber.Map{
+		"message": "Successed get all diseases",
+		"data":    disease,
+	})
 }
 
 func HandlerDiseaseCreate(ctx *fiber.Ctx) error {
@@ -166,7 +164,7 @@ func HandlerGetDiseasebyID(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.Status(404).JSON(fiber.Map{
+	return ctx.JSON(fiber.Map{
 		"message": "Success get disease by id",
 		"data":    disease,
 	})
@@ -185,7 +183,7 @@ func HandlerGetResultByDate(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.Status(404).JSON(fiber.Map{
+	return ctx.JSON(fiber.Map{
 		"message": "Success get result by date",
 		"data":    result,
 	})
@@ -205,7 +203,7 @@ func HandlerGetResultByDateAndIDPenyakit(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.Status(404).JSON(fiber.Map{
+	return ctx.JSON(fiber.Map{
 		"message": "Success get result by date and disease id",
 		"data":    result,
 	})

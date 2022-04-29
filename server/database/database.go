@@ -12,7 +12,8 @@ var DB *gorm.DB
 
 func DatabaseInit() {
 	var err error
-	const MYSQL = "root:asdf@tcp(127.0.0.1:3306)/penyakit?charset=utf8mb4&parseTime=True&loc=Local"
+	// const MYSQL = "root:asdf@tcp(127.0.0.1:3306)/penyakit?charset=utf8mb4&parseTime=True&loc=Local"
+	const MYSQL = "root:root@tcp(127.0.0.1:3306)/random_scheme?charset=utf8mb4&parseTime=True&loc=Local"
 	dsn := MYSQL
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 

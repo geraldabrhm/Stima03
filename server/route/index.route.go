@@ -1,12 +1,12 @@
 package route
 
 import (
-	"practice-api/handler"
+	"dna-go-app/handler"
 
 	"github.com/gofiber/fiber/v2"
 
-	// "practice-api/middleware"
-	"practice-api/utils"
+	// "dna-go-app/middleware"
+	"dna-go-app/utils"
 )
 
 func RouteInit(r *fiber.App) {
